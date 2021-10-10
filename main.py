@@ -55,7 +55,9 @@ def create_callback(enviro):
     def on_message(unused_client, unused_userdata, message):
         payload = str(message.payload)
         print('received command msg: {}'.format(payload))
-        #update_display(enviro.display, payload)
+        if enviro:
+            update_display(enviro.display, payload)
+
     callbacks['on_message'] = on_message
     return callbacks
 
@@ -108,7 +110,7 @@ def main():
                 update_display(enviro.display, msg)
                 time.sleep(args.upload_delay)
             else:
-                virtual_display.show(msg, delay_ms=args.upload_delay*1000)
+                virtual_display.show(msg, delay_ms=1)
 
             # Attempt cloud upload.
             if cloud.enabled():
